@@ -3,8 +3,11 @@ set -eu
 
 # todo: clean up path
 DIR=${TF_ACTION_WORKING_DIR:-.}
+cd "$DIR"
 
-# todo: support args to terraform plan
+WORKSPACE=${TF_ACTION_WORKSPACE:-default}
+terraform workspace select "$WORKSPACE"
+
 PLAN_OUTPUT_FILE=$(mktemp)
 sh -c "TF_IN_AUTOMATION=true terraform plan -no-color $* | tee $PLAN_OUTPUT_FILE"
 
