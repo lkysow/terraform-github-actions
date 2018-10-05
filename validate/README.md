@@ -24,7 +24,7 @@ workflow "Terraform Validate" {
 # We only run our actions on new or updated (synchronized) pull requests.
 # This action ignores other pull request events.
 action "filter-to-pr-open-or-synced" {
-  uses = "docker://bkeepers/actions-filter"
+  uses = "docker://superbbears/filter:0.2.0"
   args = ["action", "opened|synchronize"]
 }
 

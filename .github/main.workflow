@@ -5,7 +5,7 @@ workflow "Terraform Plan" {
 }
 
 action "filter-to-pr-open-synced" {
-  uses = "docker://bkeepers/actions-filter"
+  uses = "docker://superbbears/filter:0.2.0"
   args = ["action", "opened|synchronize"]
 }
 
