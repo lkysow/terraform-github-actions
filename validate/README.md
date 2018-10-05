@@ -42,12 +42,21 @@ action "terraform validate" {
 }
 ```
 
-Because `terraform init` needs to be run before `terraform validate` your workflow will probably look like
-
 ## Environment Variables
 | Name                    | Default | Description                                                                     |
 |-------------------------|---------|---------------------------------------------------------------------------------|
 | `TF_ACTION_WORKING_DIR` | `.`     | Which directory `terraform validate` runs in. Relative to the root of the repo. |
 
 ## Secrets
-No secrets
+No secrets are required for `terraform validate`.
+
+## Arguments
+Arguments to `terraform validate` will be appended to the `terraform validate`
+command:
+```workflow
+action "terraform validate" {
+  uses = "hashicorp/terraform-github-actions/validate@<latest tag>"
+  needs = "terraform init"
+  args = ["-var", "'foo=bar'", "-var-file=foo"]
+}
+```
