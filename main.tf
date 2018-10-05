@@ -1,1 +1,1 @@
-resource "hi"
+resource "null_resource" "test"{}
