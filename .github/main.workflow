@@ -14,10 +14,15 @@ action "terraform-validate" {
   needs = "filter-to-pr-open-synced"
 }
 
+action "terraform-fmt" {
+  uses = "./fmt"
+  needs = "terraform-validate"
+}
+
 action "terraform-init-pr" {
   uses = "docker://hashicorp/terraform"
   args = ["init"]
-  needs = "terraform-validate"
+  needs = "terraform-fmt"
 }
 
 action "terraform-plan" {
