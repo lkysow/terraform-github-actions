@@ -1,0 +1,13 @@
+FROM hashicorp/terraform:0.11.8
+
+LABEL "com.github.actions.name"="terraform validate"
+LABEL "com.github.actions.description"="Validate the terraform files in a directory"
+LABEL "com.github.actions.icon"="check"
+LABEL "com.github.actions.color"="purple"
+
+LABEL "repository"="https://github.com/hashicorp/terraform-github-actions"
+LABEL "homepage"="http://github.com/hashicorp/terraform-github-actions"
+LABEL "maintainer"="HashiCorp Terraform Team <terraform@hashicorp.com>"
+
+COPY entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
