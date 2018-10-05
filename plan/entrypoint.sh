@@ -1,12 +1,15 @@
-#!/bin/sh -l
+#!/bin/sh
 set -eu
 
-# todo: use random name for plan.out
-# todo: use the TF_INAUTOMATION env var
-terraform plan -no-color | tee /tmp/plan.out
+# todo: clean up path
+DIR=${TF_ACTION_WORKING_DIR:-.}
+
+# todo: support args to terraform plan
+PLAN_OUTPUT_FILE=$(mktemp)
+sh -c "TF_IN_AUTOMATION=true terraform plan -no-color $* | tee $PLAN_OUTPUT_FILE"
 
 COMMENTS_URL=$(cat /github/workflow/event.json | jq -r .pull_request.comments_url)
-FMT_PLAN=$(cat /tmp/plan.out | sed -r -e 's/^  \+/\+/g' | sed -r -e 's/^  ~/~/g' | sed -r -e 's/^  -/-/g')
+FMT_PLAN=$(cat "$PLAN_OUTPUT_FILE" | sed -r -e 's/^  \+/\+/g' | sed -r -e 's/^  ~/~/g' | sed -r -e 's/^  -/-/g')
 COMMENT="\`\`\`diff
 $FMT_PLAN
 \`\`\`"

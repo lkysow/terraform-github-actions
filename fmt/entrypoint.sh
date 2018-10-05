@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 
 # todo: clean up path
 DIR=${TF_ACTION_WORKING_DIR:-.}
