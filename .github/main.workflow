@@ -9,19 +9,24 @@ action "filter-to-pr-open-synced" {
   args = ["action", "opened|synchronize"]
 }
 
-action "terraform-validate" {
-  uses = "./validate"
+action "terraform-fmt" {
+  uses = "./fmt"
   needs = "filter-to-pr-open-synced"
 }
 
-action "terraform-init-pr" {
+action "terraform-init" {
   uses = "docker://hashicorp/terraform"
   args = ["init"]
-  needs = "terraform-validate"
+  needs = "terraform-fmt"
+}
+
+action "terraform-validate" {
+  uses = "./validate"
+  needs = "terraform-init"
 }
 
 action "terraform-plan" {
   uses = "./plan"
-  needs = "terraform-init-pr"
+  needs = "terraform-validate"
   secrets = ["GITHUB_TOKEN"]
 }
