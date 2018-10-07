@@ -2,7 +2,7 @@ FROM hashicorp/terraform:0.11.8
 
 LABEL "com.github.actions.name"="terraform fmt"
 LABEL "com.github.actions.description"="Validate terraform files are formatted"
-LABEL "com.github.actions.icon"="menu"
+LABEL "com.github.actions.icon"="more-vertical"
 LABEL "com.github.actions.color"="purple"
 
 LABEL "repository"="https://github.com/hashicorp/terraform-github-actions"
