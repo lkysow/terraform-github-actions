@@ -1,9 +1,7 @@
 #!/bin/sh
 set -eu
 
-# todo: clean up path
-DIR=${TF_ACTION_WORKING_DIR:-.}
-cd "$DIR"
+cd "${TF_ACTION_WORKING_DIR:-.}"
 
 WORKSPACE=${TF_ACTION_WORKSPACE:-default}
 terraform workspace select "$WORKSPACE"
