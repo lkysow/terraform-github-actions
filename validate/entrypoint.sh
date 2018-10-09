@@ -10,7 +10,7 @@ if [ $SUCCESS -eq 0 ]; then
     exit 0
 fi
 
-if [ ! "$TF_ACTION_COMMENT" ]; then
+if [ "$TF_ACTION_COMMENT" = "1" ] || [ "$TF_ACTION_COMMENT" = "false" ]; then
     exit $SUCCESS
 fi
 
