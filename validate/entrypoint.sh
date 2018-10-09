@@ -1,5 +1,5 @@
 #!/bin/sh
-set -eux
+set -ex
 
 cd "${TF_ACTION_WORKING_DIR:-.}"
 OUTPUT=$(sh -c "terraform validate -no-color $*")
