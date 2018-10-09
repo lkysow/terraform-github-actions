@@ -23,6 +23,7 @@ action "terraform-init" {
 action "terraform-validate" {
   uses = "./validate"
   needs = "terraform-init"
+  secrets = ["GITHUB_TOKEN"]
 }
 
 action "terraform-plan" {
