@@ -3,7 +3,7 @@ set -e
 cd "${TF_ACTION_WORKING_DIR:-.}"
 
 set +e
-OUTPUT=$(sh -c "terraform validate -no-color $*")
+OUTPUT=$(sh -c "terraform validate -no-color $*" 2>&1)
 SUCCESS=$?
 echo "$OUTPUT"
 set -e
