@@ -1,10 +1,12 @@
 #!/bin/sh
-set -ex
-
+set -e
 cd "${TF_ACTION_WORKING_DIR:-.}"
-OUTPUT=$(sh -c "terraform validate -no-color $*")
+
+set +e
+OUTPUT=$(sh -c "terraform validate -no-color $*" 2>&1)
 SUCCESS=$?
 echo "$OUTPUT"
+set -e
 
 if [ $SUCCESS -eq 0 ]; then
     exit 0

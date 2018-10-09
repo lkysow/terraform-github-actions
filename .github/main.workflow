@@ -12,6 +12,7 @@ action "filter-to-pr-open-synced" {
 action "terraform-fmt" {
   uses = "./fmt"
   needs = "filter-to-pr-open-synced"
+  secrets = ["GITHUB_TOKEN"]
 }
 
 action "terraform-init" {
@@ -23,6 +24,7 @@ action "terraform-init" {
 action "terraform-validate" {
   uses = "./validate"
   needs = "terraform-init"
+  secrets = ["GITHUB_TOKEN"]
 }
 
 action "terraform-plan" {
