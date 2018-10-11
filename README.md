@@ -17,7 +17,8 @@ This action runs `terraform plan` on your pull request and comments back with th
 To add these actions to your pull requests, you can copy our recommended workflow into your `.github/main.workflow` file or you can write your own workflow.
 
 ## Recommended Workflow
-This workflow will run `terraform fmt`, `init`, `validate` and `plan`.
+This workflow will run `terraform fmt`, `init`, `validate` and `plan`. To add it to your repo, create a `.github/main.workflow` file.
+
 <details><summary>Show</summary>
   
 ```workflow
