@@ -14,10 +14,25 @@ This action runs `terraform plan` on your pull request and comments back with th
 ![Terraform Plan Action](assets/plan.png)
 
 # Usage
-To add these actions to your pull requests, you can copy our recommended workflow into your `.github/main.workflow` file or you can write your own workflow.
+To add these actions to your pull requests, you can copy our [recommended workflow](#recommended-workflow) into your `.github/main.workflow` file or you can [write your own workflow](#compose-your-own-workflow).
 
 ## Recommended Workflow
-This workflow will run `terraform fmt`, `init`, `validate` and `plan`. To add it to your repo, create a `.github/main.workflow` file.
+This workflow will run `terraform fmt`, `init`, `validate` and `plan`. To use it:
+1. Open up your repository in GitHub and click on the **Actions** tab
+1. Click **Create a new workflow**
+1. Click **<> Edit new file**
+1. Paste the contents below into the file
+1. If your Terraform is in a different directory that the root of your repo, then replace all instances of
+    ```
+    TF_ACTION_WORKING_DIR = "."
+    ```
+    With your directory, relative to the root of the repo, ex.
+    ```
+    TF_ACTION_WORKING_DIR = "./terraform"
+    ```
+    If you have multiple directories of Terraform code see [Multiple Terraform Directories](#multiple-terraform-directories)
+1. Click back to the **Visual editor**
+1. 
 
 <details><summary>Show</summary>
   
@@ -78,3 +93,5 @@ action "terraform-plan" {
 }
 ```
 </details>
+
+# Compose Your Own Workflow
