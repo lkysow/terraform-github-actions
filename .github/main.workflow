@@ -10,9 +10,9 @@ action "terraform-fmt" {
 }
 
 action "terraform-init" {
-  uses = "docker://hashicorp/terraform"
-  args = ["init"]
+  uses = "./init"
   needs = "terraform-fmt"
+  secrets = ["GITHUB_TOKEN"]
 }
 
 action "terraform-validate" {
