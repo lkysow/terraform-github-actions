@@ -52,7 +52,7 @@ action "terraform init" {
   As a result, we recommend you do not use this action on public repos or repos where untrusted users can submit pull requests.
 
 ## Arguments
-Arguments to `plan` will be appended to the `terraform validate`
+Arguments to `plan` will be appended to the `terraform plan`
 command:
 ```workflow
 action "terraform plan" {
