@@ -8,47 +8,49 @@ in the configuration are specified in one of the possible ways:
 * `terraform.tfvars`
 * default value
 
-This action succeeds if `terraform validate` passes.
+## Success Criteria
+This action succeeds if `terraform validate` runs without error.
 
 ## Usage
-NOTE: The `terraform validate` action will always fail unless `terraform init` is run first.
+To use the `validate` action, add it to your workflow file.
 
-To run `terraform validate` on new and updated pull requests, create a `.github/main.workflow` file:
 ```workflow
-# This workflow will run on pull request events.
-workflow "Terraform Validate" {
-  resolves = "terraform validate"
-  on = "pull_request"
-}
-
-# We only run our actions on new or updated (synchronized) pull requests.
-# This action ignores other pull request events.
-action "filter-to-pr-open-or-synced" {
-  uses = "docker://superbbears/filter:0.2.0"
-  args = ["action", "opened|synchronize"]
-}
-
-# validate will always fail unless terraform init is run first.
-action "terraform init" {
-  uses = "docker://hashicorp/terraform"
-  args = ["init"]
-  needs = "filter-to-pr-open-or-synced"
-}
-
-# Now we can call validate.
 action "terraform validate" {
+  # Replace <latest tag> with the latest tag from https://github.com/hashicorp/terraform-github-actions/releases.
   uses = "hashicorp/terraform-github-actions/validate@<latest tag>"
+  
+  # `terraform validate` will always fail unless `terraform init` is run first.
   needs = "terraform init"
+  
+  # See Environment Variables below for details.
+  env = {
+    TF_ACTION_WORKING_DIR = "."
+  }
+  
+  # If you need to specify additional arguments to terraform validate, add them here.
+  # Otherwise, delete this line or leave the array empty.
+  args = ["-var", "foo=bar"]
+  
+  # We need the GitHub token to be able to comment back on the pull request.
+  secrets = ["GITHUB_TOKEN"]
+}
+
+action "terraform init" {
+  uses = "hashicorp/terraform-github-actions/init@<latest tag>"
 }
 ```
 
 ## Environment Variables
-| Name                    | Default | Description                                                                     |
-|-------------------------|---------|---------------------------------------------------------------------------------|
-| `TF_ACTION_WORKING_DIR` | `.`     | Which directory `terraform validate` runs in. Relative to the root of the repo. |
+| Name                    | Default   | Description                                                                      |
+|-------------------------|-----------|----------------------------------------------------------------------------------|
+| `TF_ACTION_WORKING_DIR` | `"."`     | Which directory `validate` runs in. Relative to the root of the repo.            |
+| `TF_ACTION_COMMENT`     | `"true"`  | Set to `"false"` to disable commenting back on pull request if `validate` fails. |
+
 
 ## Secrets
-No secrets are required for `terraform validate`.
+The `GITHUB_TOKEN` secret is required for posting a comment back to the pull request if `validate` fails.
+
+If you have set `TF_ACTION_COMMENT = "false"`, then `GITHUB_TOKEN` is not required.
 
 ## Arguments
 Arguments to `terraform validate` will be appended to the `terraform validate`
@@ -56,7 +58,6 @@ command:
 ```workflow
 action "terraform validate" {
   uses = "hashicorp/terraform-github-actions/validate@<latest tag>"
-  needs = "terraform init"
-  args = ["-var", "'foo=bar'", "-var-file=foo"]
+  args = ["-var", "foo=bar", "-var-file=foo"]
 }
 ```
