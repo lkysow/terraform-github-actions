@@ -2,16 +2,22 @@
 These official Terraform GitHub Actions allow you to run `terraform fmt`, `validate` and `plan` on your pull requests to help you review and validate Terraform changes.
 
 ### Terraform Fmt Action
-This action runs `terraform fmt` on your pull request and comments back if any files are not formatted correctly.
-![Terraform Fmt Action](assets/fmt.png)
+Runs `terraform fmt` and comments back if any files are not formatted correctly.
+<p align="center">
+  <img src="./assets/fmt.png" alt="Terraform Fmt Action" width="80%" />
+</p>
 
 ### Terraform Validate Action
-This action runs `terraform validate` on your pull request and comments back if it fails.
-![Terraform Validate Action](assets/validate.png)
+Runs `terraform validate` and comments back on error.
+<p align="center">
+  <img src="./assets/validate.png" alt="Terraform Validate Action" width="80%" />
+</p>
 
 ### Terraform Plan Action
-This action runs `terraform plan` on your pull request and comments back with the output.
-![Terraform Plan Action](assets/plan.png)
+Runs `terraform plan` and comments back with the output.
+<p align="center">
+  <img src="./assets/plan.png" alt="Terraform Plan Action" width="80%" />
+</p>
 
 # Usage
 To add these actions to your pull requests, you can copy our [recommended workflow](#recommended-workflow) into your `.github/main.workflow` file or you can [write your own workflow](#compose-your-own-workflow).
