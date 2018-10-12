@@ -31,9 +31,21 @@ action "terraform-validate" {
   needs   = "terraform-init"
 }
 
+action "create-workspace1" {
+  uses    = "docker://hashicorp/terraform:0.11.8"
+  needs   = "terraform-validate"
+  args    = ["workspace", "new", "workspace1"]
+}
+
+action "create-workspace2" {
+  uses    = "docker://hashicorp/terraform:0.11.8"
+  needs   = "terraform-validate"
+  args    = ["workspace", "new", "workspace2"]
+}
+
 action "terraform-plan-workspace1" {
   uses    = "./plan"
-  needs   = "terraform-validate"
+  needs   = "create-workspace1"
   secrets = ["GITHUB_TOKEN"]
 
   env = {
@@ -43,7 +55,7 @@ action "terraform-plan-workspace1" {
 
 action "terraform-plan-workspace2" {
   uses    = "./plan"
-  needs   = "terraform-validate"
+  needs   = "create-workspace2"
   secrets = ["GITHUB_TOKEN"]
 
   env = {
