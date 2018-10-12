@@ -1,17 +1,11 @@
 # Plan Workflow
 workflow "Terraform Plan" {
   resolves = "terraform-plan"
-  on = "pull_request"
-}
-
-action "filter-to-pr-open-synced" {
-  uses = "docker://superbbears/filter:0.2.0"
-  args = ["action", "opened|synchronize"]
+  on = "push"
 }
 
 action "terraform-fmt" {
   uses = "./fmt"
-  needs = "filter-to-pr-open-synced"
   secrets = ["GITHUB_TOKEN"]
 }
 
