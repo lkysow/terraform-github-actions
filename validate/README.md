@@ -37,6 +37,7 @@ action "terraform validate" {
 
 action "terraform init" {
   uses = "hashicorp/terraform-github-actions/init@<latest tag>"
+  secrets = ["GITHUB_TOKEN"]
 }
 ```
 
@@ -53,11 +54,11 @@ The `GITHUB_TOKEN` secret is required for posting a comment back to the pull req
 If you have set `TF_ACTION_COMMENT = "false"`, then `GITHUB_TOKEN` is not required.
 
 ## Arguments
-Arguments to `terraform validate` will be appended to the `terraform validate`
+Arguments to `validate` will be appended to the `terraform validate`
 command:
 ```workflow
 action "terraform validate" {
-  uses = "hashicorp/terraform-github-actions/validate@<latest tag>"
+  ...
   args = ["-var", "foo=bar", "-var-file=foo"]
 }
 ```
