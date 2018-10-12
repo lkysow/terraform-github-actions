@@ -3,7 +3,7 @@ set -e
 cd "${TF_ACTION_WORKING_DIR:-.}"
 
 set +e
-OUTPUT=$(sh -c "terraform init -no-color $*" 2>&1)
+OUTPUT=$(sh -c "terraform init -no-color -input=false $*" 2>&1)
 SUCCESS=$?
 echo "$OUTPUT"
 set -e
@@ -22,7 +22,7 @@ $OUTPUT
 \`\`\`"
 PAYLOAD=$(echo '{}' | jq --arg body "$COMMENT" '.body = $body')
 COMMENTS_URL=$(cat /github/workflow/event.json | jq -r .pull_request.comments_url)
-curl -H "Authorization: token $GITHUB_TOKEN" --header "Content-Type: application/json" --data "$PAYLOAD" "$COMMENTS_URL"
+curl -s -S -H "Authorization: token $GITHUB_TOKEN" --header "Content-Type: application/json" --data "$PAYLOAD" "$COMMENTS_URL" > /dev/null
 
 exit $SUCCESS
 

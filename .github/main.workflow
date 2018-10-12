@@ -21,14 +21,9 @@ action "terraform-init" {
   needs = "terraform-fmt"
 }
 
-action "terraform-validate" {
-  uses = "./validate"
-  needs = "terraform-init"
-  secrets = ["GITHUB_TOKEN"]
-}
-
 action "terraform-plan" {
   uses = "./plan"
-  needs = "terraform-validate"
+  needs = "terraform-init"
+  args = ["-var", "myvar=1"]
   secrets = ["GITHUB_TOKEN"]
 }
