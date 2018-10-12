@@ -24,5 +24,6 @@ action "terraform-init" {
 action "terraform-plan" {
   uses = "./plan"
   needs = "terraform-init"
+  args = ["-var", "myvar=1"]
   secrets = ["GITHUB_TOKEN"]
 }
