@@ -3,7 +3,7 @@ set -e
 cd "${TF_ACTION_WORKING_DIR:-.}"
 
 set +e
-UNFMT_FILES=$(sh -c "terraform fmt -check=true -write=false $*" 2>&1)
+UNFMT_FILES=$(sh -c "terraform fmt -check=true -write=false -list=true $*" 2>&1)
 SUCCESS=$?
 echo "$UNFMT_FILES"
 set -e
